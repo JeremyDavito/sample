@@ -1,0 +1,108 @@
+{% import "macros/icones.html.twig" as icons %}
+{% set currentDate = 'now'|date('Y-m-d H:i:s') %}
+<tr class="all-items" id="{{ (user is defined)?user.id:'' }}">
+  <td class="row-id">{{ (user is defined)?user.id:'' }}</td>
+  <td class="small-column row-login">{{ (user is defined)?user.login:'' }}</td>
+  <td class="small-column row-firstName">{{ (user is defined)?user.firstName:'' }}</td>
+  <td class="small-column row-lastName">{{ (user is defined)?user.lastName:'' }}</td>
+  <td class="row-blocked">
+  {% if user is defined and user.blocked == true %}
+    <div  class="icon-blocked-user-svg" data-buttonUnblockIcon-id="{{ (user is defined)?user.id:'' }}" title="Compte bloqué">
+      {{ icons.user_blocked_checkboxon ('hw-svg-20 pointer-events-none', 'var(--black)') }}
+    </div>
+  {%else%}
+    <div class="icon-blocked-user-svg" title="Compte non-bloqué">
+      {{ icons.user_blocked_checkboxoff ('hw-svg-20 pointer-events-none', 'var(--black)') }}
+    </div>
+  {%endif%}
+  </td>
+  <td class="row-blockedUntil"><span  data-buttonUnblockUntil-id="{{ (user is defined)?user.id:'' }}" >{{ (user is defined and user.blocked)?user.blockedUntil|date_modify("+1 hour")|date("d/m/Y H:i:s", "Europe/Paris") :'' }}</span></td>
+  <td class="row-state">{{ (user is defined)?user.state.state:'' }}</td>
+  <td class="row-roles">{{ (user is defined)?user.roles[0] }}</td>
+{% if user is defined and user.ad != null and data.authMethods == "AD" %}
+    <td class="ad">{{ (user is defined)?user.ad.ad }}</td>
+    {% elseif data.authMethods == "AD" %}
+      <td class="ad"></td>
+  {%endif%}
+  {%if data.authMethods == "AD" %}
+    <td class="row-samAccount">{{ (user is defined)?user.samAccount:'' }}</td>
+    <td class="row-adDn"><span class="dn cut-text" title="{{ (user is defined)?user.adDn:'' }}">{{ (user is defined)?user.adDn:'' }}</span></td>
+ {% endif %}
+  <td class="row-email">{{ (user is defined)?user.email:'' }}</td>
+
+  <td>
+    <div class="parent-buttons">
+      <div class="_btn-container relative flex">
+        {% if user is not defined or user.roles[0] != 'ROLE_SUPER_ADMINISTRATOR' %}
+        {% if (user is defined and user.id == app.user.id) %}
+          {% else %}
+        <button class="actions-table" data-action="click->user#edit" data-user-id="{{ (user is defined)?user.id:'' }}">
+          {{ icons.edit_icon('hw-svg-20 pointer-events-none', 'var(--black)') }}
+          <span class="tooltip">Modifier</span>
+        </button>
+        <button class="dropdown-button actions-table" data-user-id="{{ (user is defined)?user.id:'' }}"
+                data-button-id="{{ (user is defined)?user.id:'' }}"
+                data-type="otp"
+                data-action="focusin->user#showButton"
+
+        >
+          {{ icons.openDots_icon('hw-svg-20 pointer-events-none', 'var(--black)') }}
+          <span class="tooltip right-0">Plus d'actions</span>
+        </button>
+        {% endif %}
+        <div data-user-id="{{ (user is defined)?user.id:'' }}"
+             data-content-id="{{ (user is defined)?user.id:'' }}"
+             class="dropdown-content"
+        >
+          <ul>
+            {% if data.authMethods == "BDD"  %}
+              <li>
+                <button class="resetpwd-button" data-action="click->user#resetPassword" data-button="delete" data-user-id="{{ (user is defined)?user.id:'' }}" data-name="{{ (user is defined)?user.login:'' }}">
+                  {{ icons.resetUserPassword_icon('', 'var(--black)') }}Réinitialiser le mot de passe
+                </button>
+              </li>
+              <li>
+                <button class="resetpwd-button" data-action="click->user#submitSendLoginMailer" data-button="delete" data-user-id="{{ (user is defined)?user.id:'' }}" data-name="{{ (user is defined)?user.login:'' }}">
+                  {{ icons.sendLogin_icon('', 'var(--black)') }}Renvoyer l'identifiant
+                </button>
+              </li>
+            {% endif %}
+            {% if user is defined and user.qrScanned == true %}
+              {% if user.id != app.user.id  %}
+              <li>
+                <button class="resetqr-button" data-action="click->user#reset" data-user-id="{{ (user is defined)?user.id:'' }}" data-name="{{ (user is defined)?user.login:'' }}">
+                  {{ icons.qrcodeReset_icon('', 'var(--black)') }}Réinitialiser QR Code
+                </button>
+              </li>
+              {% endif %}
+            {% endif %}
+            {% if user is defined and user.blocked == true %}
+              <li>
+                <button class="unblock-button'" data-action="click->user#unBlockUser"
+                        data-user-id="{{ (user is defined)?user.id:'' }}"
+                        data-buttonUnblock-id="{{ (user is defined)?user.id:'' }}"
+                        data-name="{{ (user is defined)?user.login:'' }}">
+                  {{ icons.unBlock_icon('', 'var(--black)') }}Débloquer l'utilisateur
+                </button>
+              </li>
+            {% endif %}
+            {% if (user is defined and user.id != app.user.id) %}
+              <li>
+                <button class="dropdown-delete-btn" data-action="click->user#delete" data-user-id="{{ (user is defined)?user.id:'' }}" data-name="{{ (user is defined)?user.login:'' }}">
+                  {{ icons.delete_icon('', 'var(--secondary-color)') }}Supprimer
+                </button>
+              </li>
+            {% elseif user is not defined %}
+              <li>
+                <button class="dropdown-delete-btn" data-action="click->user#delete" data-user-id="" data-name="">
+                  {{ icons.delete_icon('', 'var(--secondary-color)') }}Supprimer
+                </button>
+              </li>
+            {% endif %}
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>

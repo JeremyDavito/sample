@@ -1,0 +1,32 @@
+{% import "macros/icones.html.twig" as icons %}
+
+<template id="templateReset">
+  <!-- Modal content -->
+  <div class="pmodal-background" data-controller="userReset" data-user-id>
+    <div class="pmodal">
+      <!-- header -->
+      <div class="modal_header">
+        <span class="title">Réinitialiser QR Code <span class="name">-</span></span>
+        <span class="close" data-action="click->userReset#close">&times;</span>
+      </div>
+      <!-- header end -->
+
+      <!-- row -->
+      <div class="delete-container">
+        <div class="delete-row">
+          <span>Êtes-vous sûr·e de vouloir réinitialiser le Qr code de l'utilisateur: <span class="name"></span> ?</span>
+        </div>
+      </div>
+      <!-- row end -->
+
+      <!-- footer -->
+      <div class="footer-btn">
+        <button class="form-btn cancel-btn" data-action="click->userReset#close">Annuler</button>
+        <button class="form-btn delete-btn" data-action="click->userReset#submit">Réinitialiser</button>
+        <button disabled class="form-btn wait-btn">{{ icons.basic_loading('hw-svg-20') }}&nbsp;Patienter</button>
+      </div>
+      <!-- footer end -->
+    </div>
+
+  </div>
+</template>

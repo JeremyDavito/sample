@@ -1,0 +1,274 @@
+{% import "macros/icones.html.twig" as icons %}
+
+<template id="templateCreateUser">
+  <!-- Modal content -->
+  <div class="pmodal-background" data-controller="createUser">
+    <div class="pmodal">
+      <!-- header -->
+      <div class="modal_header">
+        <span class="title">Créer un utilisateur</span>
+        <span class="close" data-action="click->createUser#close">&times;</span>
+      </div>
+      <!-- header end -->
+      <!-- form BDD-->
+      {% if data.authMethods == "BDD" %}
+        <div class="form-container">
+          {# #}
+          <div class="form-row">
+            <div class="input-container">
+              <div class="firstName-component input-component">
+                <label class="firstName-label input-label">Prénom *</label>
+                <!-- input -->
+                <input
+                        name="firstName"
+                        type="text"
+                        placeholder="Prénom *"
+                        required="required"
+                        autocomplete="off"
+                        data-id="firstName"
+                        data-regex="REGEX_NAME"
+                        data-controller="validator"
+                        class="firstName-input input-element">
+                <!-- icons -->
+                <div class="firstName-icon all-input-icon">
+                  {{ icons.info_icon('hw-svg-20', 'var(--invalid)') }}
+                  <!-- error -->
+                  <span class="firstName-error errors">Longueur entre 3 et 50<br>Et seulement chiffres et lettres</span>
+                </div>
+              </div>
+            </div>
+            {# #}
+            <div class="input-container">
+              <div class="lastName-component input-component">
+                <label class="lastName-label input-label">Nom *</label>
+                <!-- input -->
+                <input
+                        name="lastName"
+                        type="text"
+                        placeholder="Nom *"
+                        required="required"
+                        autocomplete="off"
+                        data-id="lastName"
+                        data-regex="REGEX_NAME"
+                        data-controller="validator"
+                        class="lastName-input input-element">
+                <!-- icons -->
+                <div class="lastName-icon all-input-icon">
+                  {{ icons.info_icon('hw-svg-20', 'var(--invalid)') }}
+                  <!-- error -->
+                  <span class="lastName-error errors">Longueur entre 3 et 50<br>Et seulement chiffres et lettres</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {# #}
+          <div class="form-row">
+            <div class="input-container">
+              <div class="email-component input-component">
+                <label class="email-label input-label">Email *</label>
+                <!-- input -->
+                <input
+                        name="email"
+                        type="text"
+                        placeholder="Email *"
+                        required="required"
+                        autocomplete="off"
+                        data-id="email"
+                        data-regex="REGEX_EMAIL"
+                        data-controller="validator"
+                        class="email-input input-element">
+                <!-- icons -->
+                <div class="email-icon all-input-icon">
+                  {{ icons.info_icon('hw-svg-20', 'var(--invalid)') }}
+                  <!-- error -->
+                  <span class="email-error errors">Format incorrect</span>
+                </div>
+              </div>
+            </div>
+            {# #}
+            <div class="input-container">
+              <div class="login-component input-component">
+                <label class="login-label input-label">Idendifiant *</label>
+                <!-- input -->
+                <input
+                        name="login"
+                        type="text"
+                        placeholder="Idendifiant *"
+                        required="required"
+                        autocomplete="off"
+                        data-id="login"
+                        data-regex="REGEX_NAME"
+                        data-controller="validator"
+                        class="login-input input-element">
+                <!-- icons -->
+                <div class="login-icon all-input-icon">
+                  {{ icons.info_icon('hw-svg-20', 'var(--invalid)') }}
+                  <!-- error -->
+                  <span class="login-error errors">Longueur entre 3 et 50<br>Et seulement chiffres et lettres</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {# #}
+          <div class="input-container">
+            <div class="input-component">
+              <label class="input-label">Rôle
+                *</label>
+              <!-- input -->
+              <select
+                name="role"
+                required="required"
+                autocomplete="off"
+                class="input-element">
+                <option value="ROLE_USER" selected>Utilisateur</option>
+                <option value="ROLE_ASSISTANT">Gestionnaire</option>
+                <option value="ROLE_ADMINISTRATOR">Administrateur</option>
+              </select>
+            </div>
+          </div>
+          {# #}
+        </div>
+      {% endif %}
+      <!-- form end -->
+
+      <!-- form AD-->
+      {% if data.authMethods == "AD" %}
+        <div class="form-container">
+          <div class="form-row">
+            <div class="input-container">
+              <div class="login-component input-component">
+                <label class="login-label input-label">Idendifiant *</label>
+                {##}
+                <!-- input -->
+                <input
+                  name="login"
+                  type="text"
+                  placeholder="Idendifiant *"
+                  required="required"
+                  autocomplete="off"
+                  data-id="login"
+                  data-regex="REGEX_NAME"
+                  data-controller="validator"
+                  class="login-input input-element">
+                <!-- icons -->
+                <div class="login-icon all-input-icon">
+                  {{ icons.info_icon('hw-svg-20', 'var(--invalid)') }}
+                  <!-- error -->
+                  <span class="login-error errors">Longueur entre 3 et 50<br>Et seulement chiffres et lettres</span>
+                </div>
+              </div>
+            </div>
+            {# #}
+            <div class="input-container">
+              <div class="input-component">
+                <label class="input-label">Rôle
+                  *</label>
+                <!-- input -->
+                <select
+                  name="role"
+                  required="required"
+                  autocomplete="off"
+                  class="input-element">
+                  <option value="ROLE_USER" selected>Utilisateur</option>
+                  <option value="ROLE_ASSISTANT">Gestionnaire</option>
+                  <option value="ROLE_ADMINISTRATOR">Administrateur</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          {# #}
+          <div class="form-row">
+            <div class="input-container">
+              <div class="sam-component input-component">
+                <label class="sam-label input-label">Compte AD *</label>
+                <!-- input -->
+                <input
+                  name="sam"
+                  type="text"
+                  placeholder="Compte AD *"
+                  required="required"
+                  autocomplete="off"
+                  data-id="sam"
+                  data-regex="REGEX_NAME"
+                  data-controller="validator"
+                  class="sam-input input-element">
+                <!-- icons -->
+                <div class="sam-icon all-input-icon">
+                  {{ icons.info_icon('hw-svg-20', 'var(--invalid)') }}
+                  <!-- error -->
+                  <span class="sam-error errors">Longueur entre 3 et 50<br>Et seulement chiffres et lettres</span>
+                </div>
+              </div>
+            </div>
+            {# #}
+            <div class="input-container">
+              <div class="input-component">
+                <label class="input-label">AD *</label>
+                <!-- input -->
+                <select
+                  name="ad"
+                  required="required"
+                  autocomplete="off"
+                  class="input-element">
+                  {% for ad in data.ads %}
+                    <option value="{{ ad.id }}">{{ ad.ad }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          {# #}
+          <div class="input-container">
+            <div class="dn-component input-component">
+              <label class="dn-label input-label">Chemin AD *</label>
+              <!-- input -->
+              <input
+                name="dn"
+                type="text"
+                placeholder="Chemin AD *"
+                required="required"
+                autocomplete="off"
+                value="{{ data.adDnDefault }}"
+                data-id="dn"
+                data-regex="REGEX_AD_DN"
+                data-controller="validator"
+                class="dn-input input-element">
+              <!-- icons -->
+              <div class="dn-icon all-input-icon">
+                {{ icons.info_icon('hw-svg-20', 'var(--invalid)') }}
+                <!-- error -->
+                <span class="dn-error errors">150 caractères nécessaires</span>
+              </div>
+            </div>
+          </div>
+          {# #}
+        </div>
+      {% endif %}
+      <!-- form end -->
+
+      <!-- footer -->
+      {% if data.authMethods == "AD" %}
+        <div class="footer-btn">
+          <button class="form-btn cancel-btn" data-action="click->createUser#close">Annuler</button>
+          <button disabled class="form-btn create-btn" data-validators="login,sam,dn"
+                  data-controller="formValidator" data-action="click->createUser#submit">Créer
+          </button>
+          <button disabled class="form-btn wait-btn">{{ icons.basic_loading('hw-svg-20') }}&nbsp;Patienter</button>
+        </div>
+      {% endif %}
+      {% if data.authMethods == "BDD" %}
+        <div class="footer-btn">
+          <span class="user-create-message">Un mail sera transmis à l'utilisateur pour générer son mot de passe.</span>
+          <div class="flex">
+            <button class="form-btn cancel-btn" data-action="click->createUser#close">Annuler</button>
+            <button disabled class="form-btn create-btn" data-validators="firstName,lastName,login,email"
+                    data-controller="formValidator" data-action="click->createUser#submit">Créer
+            </button>
+            <button disabled class="form-btn wait-btn">{{ icons.basic_loading('hw-svg-20') }}&nbsp;Patienter</button>
+          </div>
+        </div>
+      {% endif %}
+      <!-- footer end -->
+    </div>
+  </div>
+</template>
